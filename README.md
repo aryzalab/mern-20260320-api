@@ -151,7 +151,7 @@ c. sort: db.users.find().sort({name:1}) 1: ASC, -1: DESC
 ## Authentication & Authorization
 
 1. Authentication: Who you are? Logged in user
-2. Authorization:  What you can do? User role
+2. Authorization: What you can do? User role
 
 ## JSON Web Token (JWT)
 
@@ -168,16 +168,19 @@ c. sort: db.users.find().sort({name:1}) 1: ASC, -1: DESC
 ## Storage
 
 1. Cookie Storage
+
 - Size: 4KB
 - Storage: Server & Browser
 - Expiry: Cookie expiry
 
 2. Local Storage
+
 - Size: 5-10MB
 - Storage: Only Browser
 - Expiry: Never
 
 3. Session Storage
+
 - Size: 5MB
 - Storage: Only Browser
 - Expiry: On tab close
@@ -210,13 +213,12 @@ Server ------- Response -----> Browser
 
 =========================
 
-- ZOD data validation
 - Postman
 - Product: filter, sort, pagination
 - Product count, get brands, categories
+- File upload in Cloudinary
 - Order management
 - Payment integration (Khalti, Stripe)
-- File upload in Cloudinary
 - Reset password / Send email
 - User management, get orders by merchant
 - Template engine

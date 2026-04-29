@@ -25,16 +25,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Password is required."],
     minLength: [6, "Password length must be greater than 6."],
-    // validate: {
-    //   validator: (value) => {
-    //     const passwordRegex =
-    //       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
-
-    //     return passwordRegex.test(value);
-    //   },
-    //   message:
-    //     "Password must contain uppercase, lowercase, number and special characters.",
-    // },
   },
   phone: {
     type: String,

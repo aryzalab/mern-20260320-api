@@ -5,6 +5,8 @@ import logger from "../middlewares/logger.js";
 import auth from "../middlewares/auth.js";
 import roleBasedAuth from "../middlewares/roleBasedAuth.js";
 import { ROLE_ADMIN, ROLE_MERCHANT } from "../constants/roles.js";
+import validate from "../middlewares/validator.js";
+import { productSchema } from "../libs/schemas/product.schema.js";
 
 const router = express.Router();
 
@@ -17,6 +19,7 @@ router.post(
   "/",
   auth,
   roleBasedAuth(ROLE_MERCHANT),
+  validate(productSchema),
   productController.createProduct,
 );
 
