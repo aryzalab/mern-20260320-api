@@ -214,8 +214,6 @@ Server ------- Response -----> Browser
 =========================
 
 - Postman
-- Product: filter, sort, pagination
-- Product count, get brands, categories
 - File upload in Cloudinary
 - Order management
 - Payment integration (Khalti, Stripe)

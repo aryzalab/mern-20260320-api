@@ -1,7 +1,7 @@
 import productService from "../services/product.service.js";
 
 const getAllProducts = async (req, res) => {
-  const products = await productService.getAllProducts();
+  const products = await productService.getAllProducts(req.query);
 
   res.json(products);
 };
@@ -55,10 +55,31 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+const getBrands = async (req, res) => {
+  const brands = await productService.getBrands();
+
+  res.json(brands);
+};
+
+const getCategories = async (req, res) => {
+  const categories = await productService.getCategories();
+
+  res.json(categories);
+};
+
+const getTotalCount = async (req, res) => {
+  const count = await productService.getTotalCount();
+
+  res.json(count);
+};
+
 export default {
   getAllProducts,
   getProductById,
   createProduct,
   updateProduct,
   deleteProduct,
+  getBrands,
+  getCategories,
+  getTotalCount,
 };

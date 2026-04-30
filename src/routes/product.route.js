@@ -12,6 +12,12 @@ const router = express.Router();
 
 router.get("/", productController.getAllProducts);
 
+router.get("/brands", productController.getBrands);
+
+router.get("/categories", productController.getCategories);
+
+router.get("/count", productController.getTotalCount);
+
 // Dynamic route (:param)
 router.get("/:id", productController.getProductById);
 
