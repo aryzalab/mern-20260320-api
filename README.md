@@ -211,10 +211,26 @@ Server ------- Response -----> Browser
 - Error handling
 - Data validation
 
+## File upload
+
+1. File with data -> Send using FormData
+2. Use `multer` package to handle formdata
+   - When file is sent through formdata, multer handles it
+   - Store the file temporarily, local folder or RAM
+   - Upload the file
+   - Remove the file after successful upload
+   - File can be single or multiple
+3. Cloudinary: Upload file to cloudinary (store your file here)
+   - Signin/Signup to cloudinary
+   - Create an API key or Use existing API key
+   - Use cloudinary sdk, and use your api key here
+4. Receive the file url from uploaded file in cloudinary
+5. Store the URL in database
+
 =========================
 
 - Postman
-- File upload in Cloudinary
+- File upload in Cloudinary (Update product image, Single file upload like profile image)
 - Order management
 - Payment integration (Khalti, Stripe)
 - Reset password / Send email

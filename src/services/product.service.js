@@ -1,4 +1,5 @@
 import Product from "../models/Product.js";
+import uploadFile from "../utils/fileuploader.js";
 
 const getAllProducts = async (query) => {
   const sort = query.sort ? JSON.parse(query.sort) : {};
@@ -30,8 +31,14 @@ const getProductById = async (id) => {
   return product;
 };
 
-const createProduct = async (data, userId) => {
-  return await Product.create({ ...data, createdBy: userId });
+const createProduct = async (data, files, userId) => {
+  const uploadedFiles = await uploadFile(files);
+
+  return await Product.create({
+    ...data,
+    imageUrls: uploadedFiles.map((file) => file.url),
+    createdBy: userId,
+  });
 };
 
 const updateProduct = async (id, input) => {

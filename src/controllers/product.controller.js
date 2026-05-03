@@ -20,7 +20,11 @@ const createProduct = async (req, res) => {
   const userId = req.user._id;
 
   try {
-    const product = await productService.createProduct(req.body, userId);
+    const product = await productService.createProduct(
+      req.body,
+      req.files,
+      userId,
+    );
 
     res.json(product);
   } catch (error) {
