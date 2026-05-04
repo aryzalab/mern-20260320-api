@@ -22,19 +22,11 @@ app.use(bodyParser.json());
 app.use(logger);
 
 app.get("/", (request, response) => {
-  response.send("Home page");
-});
-
-app.get("/about", (req, res) => {
-  res.send("About page");
-});
-
-app.get("/contact", (req, res) => {
-  res.send("Contact Page");
-});
-
-app.post("/contact", (req, res) => {
-  res.send("Contact form submitted.");
+  response.json({
+    status: "ok",
+    version: "0.1.0",
+    port: config.port,
+  });
 });
 
 app.use("/api/products", upload.array("images", 5), productRoute);

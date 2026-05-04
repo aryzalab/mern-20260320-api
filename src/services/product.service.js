@@ -41,8 +41,16 @@ const createProduct = async (data, files, userId) => {
   });
 };
 
-const updateProduct = async (id, input) => {
-  return await Product.findByIdAndUpdate(id, input, { new: true });
+const updateProduct = async (id, input, files) => {
+  const updateData = input;
+
+  if (files && files.length > 0) {
+    const uploadedFiles = await uploadFile(files);
+
+    updateData.imageUrls = uploadedFiles.map((file) => file.url);
+  }
+
+  return await Product.findByIdAndUpdate(id, updateData, { new: true });
 };
 
 const deleteProduct = async (id) => {

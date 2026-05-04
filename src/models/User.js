@@ -58,6 +58,9 @@ const userSchema = new mongoose.Schema({
     enum: ["CUSTOMER", "MERCHANT", "ADMIN", "SUPER_ADMIN"],
     default: ["CUSTOMER"],
   },
+  profileImageUrl: {
+    type: String,
+  },
 });
 
 export default mongoose.model("User", userSchema);
