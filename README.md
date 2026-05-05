@@ -229,7 +229,6 @@ Server ------- Response -----> Browser
 
 =========================
 
-- Order management
 - Payment integration (Khalti, Stripe)
 - Reset password / Send email
 - User management, get orders by merchant
