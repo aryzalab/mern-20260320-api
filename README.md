@@ -227,10 +227,27 @@ Server ------- Response -----> Browser
 4. Receive the file url from uploaded file in cloudinary
 5. Store the URL in database
 
+## Reset password
+
+### Forgot password
+
+1. User requests for forgot password
+2. User inputs email address
+3. Using email address, find the user, create a reset password link and token
+4. Send the reset password link to the email
+
+### Reset password
+
+1. User clicks on the reset password link from the received email
+2. The link contains the reset-password route with token
+3. User inputs new password
+4. Send request for reset password with the new password and token
+5. Verify the user and token
+6. Update the password
+
 =========================
 
-- Reset password / Send email
 - User management, get orders by merchant
-- Template engine
 - Deployment in Vercel
 - AI Integration (Gemini)
+- Template engine

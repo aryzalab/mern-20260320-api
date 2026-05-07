@@ -37,4 +37,28 @@ const register = async (req, res) => {
   }
 };
 
-export default { register, login };
+const forgotPassword = async (req, res) => {
+  const input = req.body;
+
+  try {
+    const data = await authService.forgotPassword(input?.email);
+
+    res.json(data);
+  } catch (error) {
+    res.status(error.status || 400).send(error.message);
+  }
+};
+
+const resetPassword = async (req, res) => {
+  const input = req.body;
+
+  try {
+    const data = await authService.resetPassword(input);
+
+    res.json(data);
+  } catch (error) {
+    res.status(error.status || 400).send(error.message);
+  }
+};
+
+export default { register, login, forgotPassword, resetPassword };
