@@ -12,7 +12,7 @@ const createUser = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
   try {
-    const user = await userService.getAll();
+    const user = await userService.getAll(req.query);
 
     res.json(user);
   } catch (error) {
@@ -22,21 +22,25 @@ const getAllUsers = async (req, res) => {
 
 const getById = async (req, res) => {
   try {
-    const user = await userService.getById(req.params.id);
+    const user = await userService.getById(req.params.id, req.user);
 
     res.json(user);
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(error.status || 400).send(error.message);
   }
 };
 
 const updateUser = async (req, res) => {
   try {
-    const user = await userService.updateUser(req.params.id, req.body);
+    const user = await userService.updateUser(
+      req.params.id,
+      req.body,
+      req.user,
+    );
 
     res.json(user);
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(error.status || 400).send(error.message);
   }
 };
 
@@ -56,7 +60,21 @@ const updateProfileImage = async (req, res) => {
 
     res.json(user);
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(error.status || 400).send(error.message);
+  }
+};
+
+const updateUserRoles = async (req, res) => {
+  try {
+    const user = await userService.updateUserRoles(
+      req.params.id,
+      req.body?.roles,
+      req.user,
+    );
+
+    res.json(user);
+  } catch (error) {
+    res.status(error.status || 400).send(error.message);
   }
 };
 
@@ -67,4 +85,5 @@ export default {
   updateUser,
   deleteUser,
   updateProfileImage,
+  updateUserRoles,
 };

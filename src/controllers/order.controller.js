@@ -22,7 +22,7 @@ const getOrderById = async (req, res) => {
 
 const getOrdersByMerchant = async (req, res) => {
   try {
-    const orders = await orderService.getOrdersByMerchant();
+    const orders = await orderService.getOrdersByMerchant(req.user._id);
 
     res.json(orders);
   } catch (error) {
@@ -42,7 +42,7 @@ const getOrdersByUser = async (req, res) => {
 
 const createOrder = async (req, res) => {
   try {
-    const createdOrder = await orderService.createOrder(req.body, req.user._id);
+    const createdOrder = await orderService.createOrder(req.body, req.user);
 
     res.json(createdOrder);
   } catch (error) {

@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import {
   ORDER_STATUS_CANCELLED,
   ORDER_STATUS_CONFIRMED,
@@ -36,28 +37,32 @@ const getOrderById = async (id) => {
   return order;
 };
 
-const createOrder = async (data, userId) => {
-  const user = await userService.getById(userId);
+const createOrder = async (data, authUser) => {
+  const user = await userService.getById(authUser._id, authUser);
 
   if (!data.shippingAddress) {
     data.shippingAddress = user.address;
   }
 
   data.orderNumber = crypto.randomUUID();
-  data.user = userId;
+  data.user = authUser._id;
 
   return await Order.create(data);
 };
 
 const updateOrderStatus = async (id, status) => {
-  return await Order.findByIdAndUpdate(id, { status }, { new: true });
+  return await Order.findByIdAndUpdate(
+    id,
+    { status },
+    { returnDocument: "after" },
+  );
 };
 
 const cancelOrder = async (id) => {
   return await Order.findByIdAndUpdate(
     id,
     { status: ORDER_STATUS_CANCELLED },
-    { new: true },
+    { returnDocument: "after" },
   );
 };
 
@@ -86,7 +91,7 @@ const confirmOrder = async (id, status) => {
   return await Order.findByIdAndUpdate(
     id,
     { status: ORDER_STATUS_CONFIRMED },
-    { new: true },
+    { returnDocument: "after" },
   );
 };
 
@@ -97,7 +102,53 @@ const getOrdersByUser = async (userId) => {
     .populate("orderItems.product", "name brand category price imageUrls");
 };
 
-const getOrdersByMerchant = () => {};
+const getOrdersByMerchant = async (merchantId) => {
+  return await Order.aggregate([
+    {
+      $lookup: {
+        from: "users",
+        localField: "user",
+        foreignField: "_id",
+        as: "orderUser",
+      },
+    },
+    {
+      $unwind: "$orderUser",
+    },
+    {
+      $lookup: {
+        from: "products",
+        localField: "orderItems.product",
+        foreignField: "_id",
+        as: "orderedProducts",
+      },
+    },
+    {
+      $match: {
+        "orderedProducts.createdBy": new mongoose.Types.ObjectId(merchantId),
+      },
+    },
+    {
+      $project: {
+        orderNumber: 1,
+        payment: 1,
+        shippingAddress: 1,
+        status: 1,
+        totalPrice: 1,
+        "orderUser._id": 1,
+        "orderUser.name": 1,
+        "orderUser.email": 1,
+        "orderUser.phone": 1,
+        "orderedProducts._id": 1,
+        "orderedProducts.name": 1,
+        "orderedProducts.price": 1,
+        "orderedProducts.brand": 1,
+        "orderedProducts.category": 1,
+        "orderedProducts.imageUrls": 1,
+      },
+    },
+  ]);
+};
 
 const orderPaymentViaCash = async (id) => {
   const order = await getOrderById(id);
@@ -113,7 +164,7 @@ const orderPaymentViaCash = async (id) => {
       status: ORDER_STATUS_CONFIRMED,
       payment: orderPayment.id,
     },
-    { new: true },
+    { returnDocument: "after" },
   );
 };
 

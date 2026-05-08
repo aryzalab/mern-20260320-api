@@ -245,9 +245,21 @@ Server ------- Response -----> Browser
 5. Verify the user and token
 6. Update the password
 
+## MongoDB Aggregation
+
+- Performing operation in multiple documents (table)
+- Complex queries
+- Filtering in multiple documents
+- Data formatting
+
+1. $match => Filtering
+2. $lookup => LEFT JOIN
+3. $unwind => INNER JOIN
+4. $project => Data formatting
+5. $group => Complex grouped operation
+
 =========================
 
-- User management, get orders by merchant
 - Deployment in Vercel
 - AI Integration (Gemini)
 - Template engine

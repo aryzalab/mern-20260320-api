@@ -16,6 +16,13 @@ const login = async (data) => {
     };
   }
 
+  if (!user.isActive) {
+    throw {
+      status: 400,
+      message: "User is inactive.",
+    };
+  }
+
   const isPasswordMatch = bcrypt.compareSync(data.password, user.password);
 
   if (!isPasswordMatch) {
@@ -50,6 +57,8 @@ const register = async (data) => {
 
   const salt = bcrypt.genSaltSync(10);
   const hashedPassword = bcrypt.hashSync(data.password, salt);
+
+  delete data.roles;
 
   const createdUser = await User.create({
     ...data,
