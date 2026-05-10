@@ -1,5 +1,5 @@
 import Product from "../models/Product.js";
-import uploadFile from "../utils/fileuploader.js";
+import uploadFile from "../utils/fileUploader.js";
 
 const getAllProducts = async (query) => {
   const sort = query.sort ? JSON.parse(query.sort) : {};

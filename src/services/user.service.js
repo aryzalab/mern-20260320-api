@@ -1,6 +1,6 @@
 import { ROLE_ADMIN, ROLE_SUPER_ADMIN } from "../constants/roles.js";
 import User from "../models/User.js";
-import uploadFile from "../utils/fileuploader.js";
+import uploadFile from "../utils/fileUploader.js";
 import authService from "./auth.service.js";
 
 const getAll = async (query) => {
