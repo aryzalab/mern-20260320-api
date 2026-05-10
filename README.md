@@ -260,6 +260,5 @@ Server ------- Response -----> Browser
 
 =========================
 
-- Deployment in Vercel
 - AI Integration (Gemini)
 - Template engine
