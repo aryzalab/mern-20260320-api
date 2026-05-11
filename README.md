@@ -258,7 +258,15 @@ Server ------- Response -----> Browser
 4. $project => Data formatting
 5. $group => Complex grouped operation
 
-=========================
+## Template Engine
 
-- AI Integration (Gemini)
-- Template engine
+- Building UI from Node.js and Express
+- Building templates for email or pdf
+- for e.g: handlebars, ejs, njk
+
+============================
+
+## Todo from frontend
+
+1. Stripe
+2. Orders Filtering

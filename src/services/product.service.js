@@ -4,9 +4,9 @@ import promptAI from "../utils/ai.js";
 import uploadFile from "../utils/fileUploader.js";
 
 const getAllProducts = async (query) => {
-  const sort = query.sort ? JSON.parse(query.sort) : {};
-  const limit = query.limit ?? 10;
-  const offset = query.offset ?? 0;
+  const sort = query?.sort ? JSON.parse(query.sort) : {};
+  const limit = query?.limit ?? 10;
+  const offset = query?.offset ?? 0;
 
   const filters = {};
 

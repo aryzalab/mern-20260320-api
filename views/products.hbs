@@ -1,0 +1,45 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Products</title>
+    <style>
+      table,
+      td,
+      th {
+        border: 1px solid;
+        border-collapse: collapse;
+        padding: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Products</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Brand</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each products}}
+          <tr>
+            <td>{{_id}}</td>
+            <td>{{name}}</td>
+            <td>{{brand}}</td>
+            <td>{{category}}</td>
+            <td>Rs.{{price}}</td>
+            <td>
+              <a href="products/{{id}}">View</a>
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </body>
+</html>
