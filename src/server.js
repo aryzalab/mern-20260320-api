@@ -1,5 +1,6 @@
 import express from "express";
 import multer from "multer";
+import cors from "cors";
 
 import config from "./config/config.js";
 import productRoute from "./routes/product.route.js";
@@ -22,6 +23,8 @@ connectCloudinary();
 
 app.use(bodyParser.json());
 app.use(logger);
+
+app.use(cors());
 
 app.set("view engine", "hbs");
 

@@ -27,6 +27,7 @@
     "bcrypt": "^6.0.0",
     "body-parser": "^2.2.2",
     "cloudinary": "^2.10.0",
+    "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "hbs": "^4.2.1",
