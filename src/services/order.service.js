@@ -17,7 +17,7 @@ import userService from "./user.service.js";
 // for admin
 const getOrders = async () => {
   return await Order.find()
-    .sort({ createdAt: -1 })
+    .sort({ createdDate: -1 })
     .populate("user", "name email phone")
     .populate("orderItems.product", "name brand category price imageUrls");
 };
@@ -97,7 +97,7 @@ const confirmOrder = async (id, status) => {
 
 const getOrdersByUser = async (userId) => {
   return await Order.find({ user: userId })
-    .sort({ createdAt: -1 })
+    .sort({ createdDate: -1 })
     .populate("user", "name email phone")
     .populate("orderItems.product", "name brand category price imageUrls");
 };
