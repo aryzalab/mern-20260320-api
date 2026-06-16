@@ -95,8 +95,12 @@ const confirmOrder = async (id, status) => {
   );
 };
 
-const getOrdersByUser = async (userId) => {
-  return await Order.find({ user: userId })
+const getOrdersByUser = async (userId, status) => {
+  const filter = { user: userId };
+
+  if (status) filter.status = status;
+
+  return await Order.find(filter)
     .sort({ createdDate: -1 })
     .populate("user", "name email phone")
     .populate("orderItems.product", "name brand category price imageUrls");
@@ -181,6 +185,7 @@ const orderPaymentViaKhalti = async (id) => {
   });
 
   return await payViaKhalti({
+    id: id,
     amount: order.totalPrice,
     purchaseOrderId: order.orderNumber,
     purchaseOrderName: order.orderItems[0].product.name,

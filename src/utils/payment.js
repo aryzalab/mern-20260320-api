@@ -3,7 +3,7 @@ import config from "../config/config.js";
 
 const payViaKhalti = async (data) => {
   const body = {
-    return_url: config.khalti.returnUrl,
+    return_url: `${config.khalti.returnUrl}/${data.id}`,
     website_url: config.appUrl,
     amount: data.amount,
     purchase_order_id: data.purchaseOrderId,
