@@ -4,6 +4,7 @@ import {
   ORDER_STATUS_CONFIRMED,
 } from "../constants/orderStatus.js";
 import {
+  PAYMENT_METHOD_CARD,
   PAYMENT_METHOD_CASH,
   PAYMENT_METHOD_ONLINE,
   PAYMENT_STATUS_FAILED,
@@ -11,7 +12,7 @@ import {
 } from "../constants/payment.js";
 import Order from "../models/Order.js";
 import Payment from "../models/Payment.js";
-import { payViaKhalti } from "../utils/payment.js";
+import { payViaKhalti, payViaStripe } from "../utils/payment.js";
 import userService from "./user.service.js";
 
 // for admin
@@ -197,6 +198,30 @@ const orderPaymentViaKhalti = async (id) => {
   });
 };
 
+const orderPaymentViaStripe = async (id) => {
+  const order = await getOrderById(id);
+
+  const orderPayment = await Payment.create({
+    method: PAYMENT_METHOD_CARD,
+    amount: order.totalPrice,
+  });
+
+  await Order.findByIdAndUpdate(id, {
+    payment: orderPayment.id,
+  });
+
+  return await payViaStripe({
+    amount: order.totalPrice,
+    orderId: order.orderNumber,
+    orderName: order.orderItems[0].product.name,
+    customer: {
+      name: order.user.name,
+      email: order.user.email,
+      phone: order.user.phone,
+    },
+  });
+};
+
 export default {
   getOrders,
   getOrderById,
@@ -209,4 +234,5 @@ export default {
   confirmOrder,
   orderPaymentViaCash,
   orderPaymentViaKhalti,
+  orderPaymentViaStripe,
 };
