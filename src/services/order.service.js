@@ -17,10 +17,50 @@ import userService from "./user.service.js";
 
 // for admin
 const getOrders = async () => {
-  return await Order.find()
-    .sort({ createdDate: -1 })
-    .populate("user", "name email phone")
-    .populate("orderItems.product", "name brand category price imageUrls");
+  return await Order.aggregate([
+    {
+      $lookup: {
+        from: "users",
+        localField: "user",
+        foreignField: "_id",
+        as: "user",
+      },
+    },
+    {
+      $unwind: "$user",
+    },
+    {
+      $lookup: {
+        from: "products",
+        localField: "orderItems.product",
+        foreignField: "_id",
+        as: "orderItems",
+      },
+    },
+    {
+      $match: {},
+    },
+    {
+      $project: {
+        orderNumber: 1,
+        payment: 1,
+        shippingAddress: 1,
+        status: 1,
+        totalPrice: 1,
+        "user._id": 1,
+        "user.name": 1,
+        "user.email": 1,
+        "user.phone": 1,
+        "orderItems._id": 1,
+        "orderItems.name": 1,
+        "orderItems.price": 1,
+        "orderItems.brand": 1,
+        "orderItems.category": 1,
+        "orderItems.imageUrls": 1,
+        createdDate: 1,
+      },
+    },
+  ]);
 };
 
 const getOrderById = async (id) => {
@@ -114,23 +154,23 @@ const getOrdersByMerchant = async (merchantId) => {
         from: "users",
         localField: "user",
         foreignField: "_id",
-        as: "orderUser",
+        as: "user",
       },
     },
     {
-      $unwind: "$orderUser",
+      $unwind: "$user",
     },
     {
       $lookup: {
         from: "products",
         localField: "orderItems.product",
         foreignField: "_id",
-        as: "orderedProducts",
+        as: "orderItems",
       },
     },
     {
       $match: {
-        "orderedProducts.createdBy": new mongoose.Types.ObjectId(merchantId),
+        "orderItems.createdBy": new mongoose.Types.ObjectId(merchantId),
       },
     },
     {
@@ -140,16 +180,17 @@ const getOrdersByMerchant = async (merchantId) => {
         shippingAddress: 1,
         status: 1,
         totalPrice: 1,
-        "orderUser._id": 1,
-        "orderUser.name": 1,
-        "orderUser.email": 1,
-        "orderUser.phone": 1,
-        "orderedProducts._id": 1,
-        "orderedProducts.name": 1,
-        "orderedProducts.price": 1,
-        "orderedProducts.brand": 1,
-        "orderedProducts.category": 1,
-        "orderedProducts.imageUrls": 1,
+        "user._id": 1,
+        "user.name": 1,
+        "user.email": 1,
+        "user.phone": 1,
+        "orderItems._id": 1,
+        "orderItems.name": 1,
+        "orderItems.price": 1,
+        "orderItems.brand": 1,
+        "orderItems.category": 1,
+        "orderItems.imageUrls": 1,
+        createdDate: 1,
       },
     },
   ]);
