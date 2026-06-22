@@ -40,6 +40,7 @@ const login = async (data) => {
     name: user.name,
     phone: user.phone,
     roles: user.roles,
+    profileImageUrl: user?.profileImageUrl,
   };
 };
 
@@ -73,6 +74,7 @@ const register = async (data) => {
     name: createdUser.name,
     phone: createdUser.phone,
     roles: createdUser.roles,
+    profileImageUrl: user?.profileImageUrl,
   };
 };
 
